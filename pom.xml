@@ -176,18 +176,12 @@
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate.validator.version}</version>
         </dependency>
         <!--PostgreSQL-->
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.connector.version}</version>
-        </dependency>
-
-	<dependency>
     	    <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.5</version>
@@ -196,10 +190,19 @@
         <!--Servlet API-->
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet-api.version}</version>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+
+
+        <!-- <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.1.0</version>
+            <scope>provided</scope>
+        </dependency> -->
+
         <!--Jackson-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -254,13 +257,13 @@
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-facebook</artifactId>
-	        <version>${springframework.social.facebook.version}</version>
+	        <version>2.0.3.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-google</artifactId>
-	        <version>${springframework.social.google.version}</version>
+	        <version>1.0.0.RELEASE</version>
         </dependency>
 	    <!--Logback-->
         <dependency>
@@ -498,6 +501,7 @@
 	        <plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
 		        <configuration>
 			        <failOnMissingWebXml>false</failOnMissingWebXml>
 		        </configuration>
@@ -520,13 +524,7 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
+            
 
             <plugin>
                 <groupId>org.liquibase</groupId>
@@ -581,51 +579,53 @@
     </build>
 
     <repositories>
-        <repository>
-            <id>org.springframework.maven.milestone</id>
-            <name>Spring Maven Milestone Repository</name>
-            <url>http://repo.spring.io/milestone</url>
-        </repository>
-        <repository>
-            <id>public</id>
-            <url>http://maven.nuxeo.org/nexus/content/groups/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
+    <!-- Maven Central (required for Jakarta EE dependencies) -->
+    <repository>
+        <id>central</id>
+        <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
 
-        <repository>
-            <id>public-snapshot</id>
-            <url>http://maven.nuxeo.org/nexus/content/groups/public-snapshot</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
+    <!-- Spring Milestone Repository (keep only if needed) -->
+    <!--  <repository> -->
+    <!--     <id>spring-milestone</id>
+        <name>Spring Maven MILESTONE Repository</name>
+        <url>https://repo.spring.io/libs-milestone</url>
+    </repository> -->
 
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-
-        <repository>
-            <id>spring-milestone</id>
-            <name>Spring Maven MILESTONE Repository</name>
-            <url>http://repo.spring.io/libs-milestone</url>
-        </repository>
+    <!-- Other repositories (Nuxeo, etc.) -->
+    <repository>
+        <id>public</id>
+        <url>https://maven.nuxeo.org/nexus/content/groups/public</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </repository>
+    <repository>
+        <id>public-snapshot</id>
+        <url>https://maven.nuxeo.org/nexus/content/groups/public-snapshot</url>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+        <snapshots>
+            <updatePolicy>always</updatePolicy>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
 </repositories>
+
 <distributionManagement>
     <repository>
       <id>nexus</id>
       <name>Releases</name>
-      <url>http://35.188.29.52:8081/repository/maven-releases</url>
+      <url>https://35.188.29.52:8081/repository/maven-releases</url>
     </repository>
     <snapshotRepository>
       <id>nexus</id>
       <name>Snapshot</name>
-      <url>http://35.188.29.52:8081/repository/maven-snapshots</url>
+      <url>https://35.188.29.52:8081/repository/maven-snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 </project>
